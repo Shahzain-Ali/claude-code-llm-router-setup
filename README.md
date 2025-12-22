@@ -1,4 +1,5 @@
-# Complete Setup Guide: WSL, Ubuntu & Claude Code with Third-Party LLMs (Qwen / Gemini) on Windows
+# Complete Setup Guide: Claude Code with Third-Party LLMs (Qwen / Gemini) on Windows
+
 
 ## Prerequisites
 
@@ -6,6 +7,13 @@
 
 > - **Windows Version:** Windows 10 (Build 2004+) or Windows 11  
 > - **Note:** Node.js is not needed on Windows — we will install Node 20+ inside WSL
+
+### 1️⃣ **Why Node on Windows doesn’t matter**
+```text
+If Node.js is installed on Windows, it does not affect Ubuntu in WSL.
+WSL is a separate Linux environment. Node must be installed inside Ubuntu.
+So even if Node 18 is installed on Windows, WSL/Ubuntu won’t use it. That’s why you need Node 20+ inside Ubuntu.
+```
 
 ---
 
@@ -17,7 +25,7 @@
 - When you open Ubuntu on Windows, you interact with it through a **terminal**, similar to CMD or PowerShell.
 
 
-## Step 0: Install Windows Subsystem for Linux (WSL)
+## Phase 0: Install Windows Subsystem for Linux (WSL)
 
 ## 1️⃣ Enable WSL (Windows Subsystem for Linux):
 
@@ -42,13 +50,19 @@ This will:
 3. Click **Install**
 4. Click **Launch**
 
----
+### First-Time Ubuntu Setup
 
-### Note:
-```text  
-If Windows prompts for a restart, you must restart your PC
-If there’s no prompt, you can continue without restarting.
-```
+During the installation and first launch of Ubuntu, you will be prompted to:
+
+1. **Create a UNIX username**
+2. **Set a password**
+
+✅ **After that, you are inside the Ubuntu terminal and ready to continue with Node, NVM, and Claude Code installation.**
+
+> **Note:**  
+> - If Windows prompts for a restart, you must restart your PC.  
+> - If you install Ubuntu manually from the Microsoft Store, these prompts will appear the first time you launch the Ubuntu terminal.  
+> - Make sure to complete this setup before continuing.
 
 ---
 
@@ -68,29 +82,10 @@ wsl
 > Search "Ubuntu" → Click it
 
 This opens your default Linux distribution (Ubuntu in this case)
-### First-Time Ubuntu Setup:
-
-When the Ubuntu terminal opens for the first time:
-
-1. **Create a UNIX username** (when prompted)
-2. **Set a password** (when prompted)
-
-After this, you are inside the Ubuntu terminal, ready to install Node and other tools.
-
-✅ **Ubuntu is now ready inside WSL**
-
-✅ **After that, you are inside the Ubuntu terminal and ready to continue with Node, NVM, and Claude Code installation**
 
 --- 
 
-## Step 1: Install Node 20+ Using NVM (Inside Ubuntu)
-
-### 1️⃣ **Why Node on Windows doesn’t matter**
-```text
-If Node.js is installed on Windows, it does not affect Ubuntu in WSL.
-WSL is a separate Linux environment. Node must be installed inside Ubuntu.
-So even if Node 18 is installed on Windows, WSL/Ubuntu won’t use it. That’s why you need Node 20+ inside Ubuntu.
-```
+## Phase 1: Install Node 20+ Using NVM (Inside Ubuntu)
 
 ### 2️⃣ How Node 20+ is installed inside Ubuntu (WSL)
 
@@ -131,11 +126,16 @@ npm -v
 
 ✅ Ensure Node version is 20+ before running Claude Code and CCR.
 
-### Prerequisites  
-- Qwen CLI installed and authenticated
-- Node.js v18+ installed
 
-**Step 1: Install Claude Code Router**
+## Phase 2: Setup Claude Code Router with Qwen CLI
+
+### Prerequisites
+- Node.js v20+ installed (inside Ubuntu / WSL)
+- WSL & Ubuntu terminal ready
+
+---
+
+**Step 0: Install Claude Code Router**
 Install Claude Code & Router:
 ```bash
 npm install -g @anthropic-ai/claude-code @musistudio/claude-code-router
@@ -145,6 +145,28 @@ npm install -g @anthropic-ai/claude-code @musistudio/claude-code-router
 ccr version
 claude --version
 ```
+
+**Step 1: Qwen CLI installed globally and authenticated**  
+```bash
+npm install -g qwen
+```
+
+Verify Qwen CLI version:
+
+```bash
+qwen --version
+```
+Run `qwen` in the terminal you'll see
+
+│ Get started                                                                                                           │
+│                                                                                                                       │
+│ How would you like to authenticate for this project?                                                                  │
+│                                                                                                                       │
+│ ● 1. Qwen OAuth                                                                                                       │
+│   2. OpenAI                                                                                                           │
+│              
+
+Authenticate yourself using your `Gmail account` or an `API Key`.
 
 **Step 2: Extract Your Access Token**  
 Replace  `PC_USER` with your Windows username.
@@ -217,7 +239,6 @@ Run Claude Code with Qwen models:
 ```bash
 ccr code
 ```
-First time you'll authenticate by using you `gmail account` or an `API Key`.
 
 Use these commands to verify your setup:
 

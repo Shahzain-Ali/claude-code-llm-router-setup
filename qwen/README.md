@@ -1,10 +1,12 @@
 # Complete Setup Guide: Claude Code with Third-Party LLMs (Qwen) on Windows
 
-### Prerequisites  
-- Qwen CLI installed and authenticated
-- Node.js v18+ installed
+### Prerequisites
+- Node.js v20+ installed (inside Ubuntu / WSL)
+- WSL & Ubuntu terminal ready
 
-**Step 1: Install Claude Code Router**
+---
+
+**Step 0: Install Claude Code Router**
 Install Claude Code & Router:
 ```bash
 npm install -g @anthropic-ai/claude-code @musistudio/claude-code-router
@@ -14,6 +16,28 @@ npm install -g @anthropic-ai/claude-code @musistudio/claude-code-router
 ccr version
 claude --version
 ```
+
+**Step 1: Qwen CLI installed globally and authenticated**  
+```bash
+npm install -g qwen
+```
+
+Verify Qwen CLI version:
+
+```bash
+qwen --version
+```
+Run `qwen` in the terminal you'll see
+
+│ Get started                                                                                                           │
+│                                                                                                                       │
+│ How would you like to authenticate for this project?                                                                  │
+│                                                                                                                       │
+│ ● 1. Qwen OAuth                                                                                                       │
+│   2. OpenAI                                                                                                           │
+│              
+
+Authenticate yourself using your `Gmail account` or an `API Key`.
 
 **Step 2: Extract Your Access Token**  
 Replace  `PC_USER` with your Windows username.
@@ -86,7 +110,6 @@ Run Claude Code with Qwen models:
 ```bash
 ccr code
 ```
-First time you'll authenticate by using you `gmail account` or an `API Key`.
 
 Use these commands to verify your setup:
 
