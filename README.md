@@ -1,4 +1,4 @@
-# Complete Setup Guide: Claude Code with Third-Party LLMs (Qwen / gemini) on Windows
+# Complete Setup Guide: WSL, Ubuntu & Claude Code with Third-Party LLMs (Qwen / Gemini) on Windows
 
 ## Prerequisites
 
