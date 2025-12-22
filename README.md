@@ -8,7 +8,7 @@
 > - **Windows Version:** Windows 10 (Build 2004+) or Windows 11  
 > - **Note:** Node.js is not needed on Windows — we will install Node 20+ inside WSL
 
-### 1️⃣ **Why Node on Windows doesn’t matter**
+### **Why Node on Windows doesn’t matter**
 ```text
 If Node.js is installed on Windows, it does not affect Ubuntu in WSL.
 WSL is a separate Linux environment. Node must be installed inside Ubuntu.
