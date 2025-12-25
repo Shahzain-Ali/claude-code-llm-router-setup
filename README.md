@@ -1,8 +1,8 @@
 # Complete Setup Guide: WSL, Ubuntu & Claude Code with Third-Party LLMs (Qwen / Gemini) on Windows
 
-[![Tux](images/Final_Thumbnail_for_WSL_and_Ubuntu_Video.png)](https://your-link.com)
+[![Tux](images/Final_Thumbnail_for_WSL_and_Ubuntu_Video.png)](https://youtu.be/t3e-l5-I1Ao?si=7nQoi6tDctjkn8jn)
 
-> 📺 Watch the Video: [Click here to watch the full step-by-step tutorial]()
+> 📺 Watch the Video: [Click here to watch the full step-by-step tutorial](https://youtu.be/t3e-l5-I1Ao?si=7nQoi6tDctjkn8jn)
 
 This repository provides the complete step-by-step guide from installing WSL2 on Windows, setting up Ubuntu and Node.js, to configuring Claude Code with the Claude Code Router and integrating Google Gemini or Qwen as third-party LLMs.
 
