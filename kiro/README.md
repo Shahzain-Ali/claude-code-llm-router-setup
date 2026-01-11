@@ -1,0 +1,340 @@
+# 🚀 Complete Setup Guide: Claude Code with Kiro Free Tier
+
+> **Use Claude Code for FREE using Kiro's 500 bonus credits!**
+
+This guide walks you through setting up Claude Code to work with Kiro's free tier on Windows. By the end, you'll have a fully functional Claude Code setup without spending a dime.
+
+---
+
+## 📋 Table of Contents
+
+1. [Prerequisites](#-prerequisites)
+2. [Phase 1: Get Your Free Kiro Credits](#-phase-1-get-your-free-kiro-credits)
+3. [Phase 2: Set Up Kiro OpenAI Gateway](#-phase-2-set-up-kiro-openai-gateway)
+4. [Phase 3: Set Up Claude Code Router](#-phase-3-set-up-claude-code-router)
+5. [Phase 4: Launch & Test](#-phase-4-launch--test)
+6. [Bonus: Get 500 More Free Credits](#-bonus-get-500-more-free-credits-with-kiro-cli)
+7. [Troubleshooting](#-troubleshooting)
+
+---
+
+## 🔧 Prerequisites
+
+Before starting, ensure you have the following installed:
+
+| Software | Minimum Version | Download Link |
+|----------|-----------------|---------------|
+| Python | 3.10+ | [python.org](https://python.org) |
+| Node.js | Latest LTS | [nodejs.org](https://nodejs.org) |
+| Git | Any | [git-scm.com](https://git-scm.com) |
+
+---
+
+## 🎁 Phase 1: Get Your Free Kiro Credits
+
+### Step 1: Download Kiro IDE
+
+Visit **[kiro.dev](https://kiro.dev)** and download the application for your platform.
+
+### Step 2: Sign Up & Login
+
+1. Open Kiro IDE
+2. Create a new account or sign in
+3. ✨ **You'll automatically receive 500 free credits!**
+
+> ⚠️ **Important:** Keep Kiro IDE logged in throughout this setup process.
+
+---
+
+## 🌐 Phase 2: Set Up Kiro OpenAI Gateway
+
+This gateway creates a local server that translates OpenAI-compatible requests to Kiro's API, allowing you to use your free credits with any OpenAI-compatible tool.
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/Jwadow/kiro-openai-gateway.git
+cd kiro-openai-gateway
+```
+
+### Step 2: Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Step 3: Configure Environment
+
+```bash
+cp .env.example .env
+```
+> This command creates a new .env file by copying all the contents from .env.example.
+
+### step 4: Uncomment
+
+> `# KIRO_CREDS_FILE="~/.aws/sso/cache/kiro-auth-token.json"` uncomment this line in .env file.
+
+### Step 4: Start the Gateway Server
+
+```bash
+python main.py
+```
+
+✅ **Success Indicator:** You should see:
+```
+Server running at http://localhost:8000
+```
+
+> 📌 **Note:** If you want to check it's working or not run `http://localhost:8000` this on the browser.It shows something like this: 
+```bash
+This site can’t be reached
+The webpage at http://0.0.0.0:8000/ might be temporarily down or it may have moved permanently to a new web address.
+ERR_ADDRESS_INVALID
+```
+You should convert this `http://localhost:8000` url into your localhost by running `python main.py --host 127.0.0.1` command in the terminal and close the old one. Then run this on the browser.
+
+`http://127.0.0.1:8000/`
+
+
+> It'll show something like this: `{"status":"ok","message":"Kiro Gateway is running","version":"2.0-rc.1"}` so it means that server is running successfully in the localhost.
+
+You should stopped this server once checked it's working or The server must stay running.
+
+---
+
+## 🔀 Phase 3: Set Up Claude Code Router
+
+The Claude Code Router wraps the official Claude CLI and redirects requests to your local Kiro gateway.
+
+### Step 1: Install Required Packages
+
+```bash
+npm install -g @anthropic-ai/claude-code
+npm install -g @musistudio/claude-code-router
+```
+### Step 2: Create Configuration File
+
+#### For windows users:
+
+> Open the Start menu, type cmd, and press Enter. This will open the Command Prompt at your root directory. 
+
+```bash
+C:\Users\username
+```
+
+Then open the code editor(IDE) by running this command `code .`. There you find a `.claude-code-router` folder in that folder there is an file `config.json`.
+ 
+**Windows Path:** `C:\Users\<YourUsername>\.claude-code-router\config.json` 
+ 
+You just paste this script in `config.json` file:
+
+```json
+{
+  "LOG": true,
+  "LOG_LEVEL": "debug",
+  "Providers": [
+    {
+      "name": "kiro",
+      "api_base_url": "http://localhost:8000/v1/chat/completions",
+      "api_key": "my-super-secret-password-123",
+      "models": [
+        "claude-sonnet-4-5",
+        "claude-haiku-4-5",
+        "claude-opus-4-5"
+      ],
+      "transformer": {
+        "use": ["openrouter"]
+      }
+    }
+  ],
+  "Router": {
+    "default": "kiro,claude-sonnet-4-5",
+    "think": "kiro,claude-sonnet-4-5",
+    "background": "kiro,claude-sonnet-4-5",
+    "longContext": "kiro,claude-sonnet-4-5",
+    "webSearch": "kiro,claude-sonnet-4-5"
+  }
+}
+```
+#### For Linux(ubuntu) users:
+
+Open the ubuntu terminal.
+
+Create or edit the file at: `~/.claude-code-router/config.json` by paste the following configuration:
+
+```json
+cat > ~/.claude-code-router/config.json << 'EOF'
+{
+  "LOG": true,
+  "LOG_LEVEL": "debug",
+  "Providers": [
+    {
+      "name": "kiro",
+      "api_base_url": "http://localhost:8000/v1/chat/completions",
+      "api_key": "my-super-secret-password-123",
+      "models": [
+        "claude-sonnet-4-5",
+        "claude-haiku-4-5",
+        "claude-opus-4-5"
+      ],
+      "transformer": {
+        "use": ["openrouter"]
+      }
+    }
+  ],
+  "Router": {
+    "default": "kiro,claude-sonnet-4-5",
+    "think": "kiro,claude-sonnet-4-5",
+    "background": "kiro,claude-sonnet-4-5",
+    "longContext": "kiro,claude-sonnet-4-5",
+    "webSearch": "kiro,claude-sonnet-4-5"
+  }
+}
+EOF
+```
+- Note: Ensure the api_key matches the PROXY_API_KEY you set in Phase 2. The model name claude-sonnet-4-5 corresponds to the models provided by the Kiro Gateway.
+
+### Configuration Explained
+
+| Key | Description |
+|-----|-------------|
+| `api_base_url` | Points to your local Kiro gateway |
+| `api_key` | Must match `PROXY_API_KEY` in your `.env` file |
+| `models` | Available Claude models through Kiro |
+| `Router` | Maps different request types to providers |
+
+---
+
+## 🚀 Phase 4: Launch & Test
+
+### Step 1: Start the Router Service
+
+Open a **new terminal** and run:
+
+```bash
+ccr start
+```
+
+It's started the server in the background.
+
+### Step 2: Run Claude Code
+
+Instead of the standard `claude` command, use:
+
+```bash
+ccr code
+```
+
+### Step 3: Test Your Setup
+
+Try a simple prompt:
+
+```
+Hi! Can you confirm you're working?
+```
+
+🎉 **Congratulations!** You're now using Claude Code with Kiro's free credits!
+
+### Step 4: Check Model:
+
+Check which model is running in the background run 
+
+```bash 
+ccr model
+```
+
+Click on backgroud model it'll showing the model which is used in the background.
+
+---
+
+## 🎯 Bonus: Get 500 More Free Credits with Kiro CLI
+
+Once your IDE credits are exhausted, you can get **another 500 free credits** by installing Kiro CLI with the same account!
+
+### Step 1: Install Kiro CLI
+
+Follow the official installation guide: **[kiro.dev/docs/cli/installation](https://kiro.dev/docs/cli/installation)**
+
+### Step 2: Login to Kiro CLI
+
+```bash
+kiro login
+```
+
+### Step 3: Update Environment Configuration
+
+Edit your `.env` file in the `kiro-openai-gateway` folder:
+
+**Remove or comment out:**
+```bash
+# KIRO_CREDS_FILE="~/.aws/sso/cache/kiro-auth-token.json"
+```
+
+**Add this line:**
+```bash
+KIRO_CLI_DB_FILE="~/.local/share/kiro-cli/data.sqlite3"
+```
+
+### Step 4: Update the Codebase
+
+Use your IDE's **Find and Replace** feature:
+
+| Find | Replace With |
+|------|--------------|
+| `KIRO_CREDS_FILE` | `KIRO_CLI_DB_FILE` |
+
+Apply this replacement across the entire `kiro-openai-gateway` codebase.
+
+### Step 5: Restart the Server
+
+```bash
+python main.py
+```
+
+✅ Your Kiro CLI credits are now active!
+
+---
+
+## 🔧 Troubleshooting
+
+### Common Issues & Solutions
+
+| Issue | Solution |
+|-------|----------|
+| Server not starting | Ensure Python 3.10+ is installed and all dependencies are met |
+| Connection refused | Verify the gateway server is running on port 8000 |
+| Authentication errors | Check that `api_key` matches `PROXY_API_KEY` in `.env` |
+| Credits not working | Ensure you're logged into Kiro IDE/CLI |
+
+### Need Help?
+
+- Check the [Kiro OpenAI Gateway GitHub](https://github.com/Jwadow/kiro-openai-gateway) for issues
+- Visit [Kiro Documentation](https://kiro.dev/docs) for official support
+
+---
+
+## 📊 Quick Reference
+
+### Terminal Windows Needed
+
+| Terminal | Command | Purpose |
+|----------|---------|---------|
+| Terminal 1 | `python main.py` | Kiro Gateway Server |
+| Terminal 2 | `ccr start` | Claude Code Router |
+| Terminal 3 | `ccr code` | Claude Code Interface |
+
+### Available Models
+
+- `claude-sonnet-4-5` — Balanced performance
+- `claude-haiku-4-5` — Fast responses
+- `claude-opus-4-5` — Maximum capability
+
+---
+
+<div align="center">
+
+*If this guide helped you, consider sharing it with others!*
+
+</div>
+
+### Maintained by Shahzain Ali | [LinkedIn Profile](https://www.linkedin.com/in/shahzain-ali-518b862ba/)
