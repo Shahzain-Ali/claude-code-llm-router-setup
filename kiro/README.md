@@ -74,7 +74,7 @@ cp .env.example .env
 
 > `# KIRO_CREDS_FILE="~/.aws/sso/cache/kiro-auth-token.json"` uncomment this line in .env file.
 
-## Step 4: Setup Variables
+### Step 4: Setup Variables
 
 Before starting the server, you need to set the required environment variables for Kiro credentials and your proxy API key.  
 
@@ -107,7 +107,7 @@ export PROXY_API_KEY=my-super-secret-password-123
 ⚠ Note: These export commands only last for the current terminal session.
 To make them permanent, you can add them to your ~/.bashrc or ~/.zshrc.
 
-## Step 5: Start the Gateway Server
+### Step 5: Start the Gateway Server
 
 ```bash
 python main.py
