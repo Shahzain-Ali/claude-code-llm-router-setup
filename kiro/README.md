@@ -70,11 +70,44 @@ cp .env.example .env
 ```
 > This command creates a new .env file by copying all the contents from .env.example.
 
-### step 4: Uncomment
+### step 3: Uncomment
 
 > `# KIRO_CREDS_FILE="~/.aws/sso/cache/kiro-auth-token.json"` uncomment this line in .env file.
 
-### Step 4: Start the Gateway Server
+## Step 4: Setup Variables
+
+Before starting the server, you need to set the required environment variables for Kiro credentials and your proxy API key.  
+
+### Windows (Command Prompt)
+
+```cmd
+:: Set the path to your Kiro credentials JSON file
+set KIRO_CREDS_FILE=C:/Users/TechLink/.aws/sso/cache/kiro-auth-token.json
+
+:: Set your super-secret proxy API key
+set PROXY_API_KEY=my-super-secret-password-123
+```
+
+⚠ Note: These set commands only last for the current terminal session.
+If you close the terminal, you will need to set them again.
+
+### Linux / Ubuntu (Bash)
+
+Before starting the Kiro Gateway server, set the required environment variables in your terminal:
+
+```bash
+# Set the path to your Kiro credentials JSON file
+export KIRO_CREDS_FILE=~/.aws/sso/cache/kiro-auth-token.json
+
+# Set your super-secret proxy API key
+export PROXY_API_KEY=my-super-secret-password-123
+
+```
+
+⚠ Note: These export commands only last for the current terminal session.
+To make them permanent, you can add them to your ~/.bashrc or ~/.zshrc.
+
+## Step 5: Start the Gateway Server
 
 ```bash
 python main.py
