@@ -118,13 +118,18 @@ python main.py
 Server running at http://localhost:8000
 ```
 
-> 📌 **Note:** If you want to check it's working or not run `http://localhost:8000` this on the browser.It shows something like this: 
+> 📌 Note: To check if the gateway is running, open your browser and go to:
+
+http://localhost:8000
+
+> You should **not** use `0.0.0.0` in the browser, as it is only a server binding address.
+
 ```bash
 This site can’t be reached
 The webpage at http://0.0.0.0:8000/ might be temporarily down or it may have moved permanently to a new web address.
 ERR_ADDRESS_INVALID
 ```
-You should convert this `http://localhost:8000` url into your localhost by running `python main.py --host 127.0.0.1` command in the terminal and close the old one. Then run this on the browser.
+You should convert this `http://0.0.0.0:8000` url into your localhost by running `python main.py --host 127.0.0.1` command in the terminal and close the old one. Then run this on the browser.
 
 `http://127.0.0.1:8000/`
 
