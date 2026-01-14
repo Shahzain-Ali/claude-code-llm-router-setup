@@ -78,7 +78,7 @@ cp .env.example .env
 
 > `# KIRO_CREDS_FILE="~/.aws/sso/cache/kiro-auth-token.json"` uncomment this line in .env file.
 > 
-- **Note**: Open the terminal on this directory **kiro-openai-gateway** where we have all the kiro code base and run this command `python main.py`.If the server is successfully running so it's means that your .env file is loaded successfully and you don't need to step  `Step 5: Setup Variables` to set this 2 environment variable manually `KIRO_CREDS_FILE` and `PROXY_API_KEY`.
+- **Note**: Open the terminal on this directory **kiro-openai-gateway** where we have all the kiro code base and run this command `python main.py`.If the server is successfully running so it's means that your .env file is loaded successfully and you don't need to implement step  `Step 5: Setup Variables` to set this 2 environment variable manually `KIRO_CREDS_FILE` and `PROXY_API_KEY`.
 
 ### Step 5: Setup Variables
 
