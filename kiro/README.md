@@ -1,6 +1,10 @@
 # 🚀 Complete Setup Guide: Claude Code with Kiro Free Tier
 
-> **Use Claude Code for FREE using Kiro's 500 bonus credits!**
+[![Tux](/images/Thumbnail_Claude_Code_with_Kiro_Free_Tier.png)](https://youtu.be/95JTKUJNP2A?si=T0YiDAuLp2Ff0msY)
+
+> 📺 Watch the Video: [Click here to watch the full step-by-step tutorial](https://youtu.be/95JTKUJNP2A?si=T0YiDAuLp2Ff0msY)
+
+## **Use Claude Code for FREE using Kiro's 500 bonus credits!**
 
 This guide walks you through setting up Claude Code to work with Kiro's free tier on Windows. By the end, you'll have a fully functional Claude Code setup without spending a dime.
 
