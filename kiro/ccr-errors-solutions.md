@@ -5,53 +5,23 @@
 
 ### Problem
 
-Agar CCR Ubuntu terminal mein chal raha ho aur aap usko stop nahi karte, to Windows terminal `CMD` mein error aata hai.
-
-### Ubuntu Terminal Output
-
-**Pehli baar start karne par:**
-```bash
-agentive-solution@DESKTOP-PNAKLV9:/mnt/d/agentic-todo-evolution$ ccr start 
-Loaded JSON config from: /home/agentive-solution/.claude-code-router/config.json
-```
-
-**Multiple times par:**
-```bash
-claude-code-router server is running
-```
-
-**Restart karne par:**
-```bash
-agentive-solution@DESKTOP-PNAKLV9:/mnt/d/agentic-todo-evolution$ ccr restart 
-claude code router service has been stopped. 
-Starting claude code router service... ✅ 
-Service started successfully in the background.
-```
-
-**Status check:**
-```bash
-agentive-solution@DESKTOP-PNAKLV9:/mnt/d/agentic-todo-evolution$ ccr status 
-📊 Claude Code Router Status 
-════════════════════════════════════════ 
-✅ Status: Running 
-🆔 Process ID: 3650 
-🌐 Port: 3456 
-📡 API Endpoint: http://127.0.0.1:3456 
-📄 PID File: /home/agentive-solution/.claude-code-router/.claude-code-router.pid 
-🚀 Ready to use! Run the following commands:    
-   ccr code    # Start coding with Claude    
-   ccr stop    # Stop the service
-```
-
 ### Windows Terminal Error
 
-Jab aap Windows terminal `CMD` mein `ccr start` aur `ccr status` run karte ho:
+Agar CCR Ubuntu terminal mein chal raha ho aur aap usko stop nahi karte to Windows terminal `CMD` mein error aata hai.
+
+```bash
+ccr status
+```
+- **Run karne ke bhaad:**
+
+### Error Screenshot
 
 ![Status-Not-Running](/images/Status-Not-Running.png "The title for the image")
 
-### Solution
 
-Matlab port busy hai. Pehle WSL2 (Ubuntu terminal) mein Claude Code Router stop karo:
+## **Solution of Error-1**:
+
+Matlab port busy hai. Pehle WSL2 (Ubuntu terminal) mein Claude Code Router stop karo run:
 
 ```bash
 ccr stop
@@ -69,47 +39,26 @@ Phir status check karo:
 ccr status
 ```
 
-### Problem Kya Thi?
+------------------------- Solution  No.1 Ended --------------------------------------
 
-Jab `ccr start` command chalaya to service start nahi hui. Error message mein sirf "Loaded JSON config" dikhaya aur phir exit code 1 ke saath fail ho gaya.
+## Error-2: Not properly  adding a content in config.json file!
 
-`ccr status` check kiya to "Not Running" dikh raha tha, lekin `ccr start` karne pe bhi service shuru nahi ho rahi thi.
+### Error Screenshot
 
-### Problem Ki Wajah (Reason)
+![400-Error-Missing-Model-In-Request-Body](/images/400-missing-model-error.png "The title for the image")
 
-Port 3456 pe ek purana process "wslrelay.exe" chal raha tha.
+## **Solution of Error-2**:
 
-Yeh isliye hua kyunki:
-- Pehle ccr ko WSL Ubuntu terminal se start kiya gaya tha
-- WSLRelay.exe ek helper process hai jo Windows aur WSL ke beech network traffic forward karta hai
-- Jab ccr band hua ya crash hua, wslrelay ne port 3456 release nahi kiya
-- Is wajah se naya ccr instance us port ko use nahi kar saka
+### Run this command that file exist or not:
 
-**Simple words mein:** Darwaza (port 3456) pehle se kisi aur ne rok rakha tha, isliye ccr andar nahi ja saka.
-
----
-
-## Error-2: Config File Exist Hi Nahi Karta Tha!
-
-### Check Karne Ka Command
+> Check by running this command:
 
 ```bash
 cat ~/.claude-code-router/config.json
 ```
 
-### Case 1: File Delete Ho Gayi
+If file exists it shows some properties in the terminal like:
 
-```bash
-agentive-solution@DESKTOP-PNAKLV9:/mnt/d/agentic-todo-evolution$ cat ~/.claude-code-router/config.json
-cat: /home/agentive-solution/.claude-code-router/config.json: No such file or directory
-```
-
-Ye tab hota hai jab manually file delete kar di ho:
-```bash
-rm ~/.claude-code-router/config.json
-```
-
-### Case 2: File Khali/Incomplete Hai
 
 ```bash
 agentive-solution@DESKTOP-PNAKLV9:~$ cat ~/.claude-code-router/config.json
@@ -120,15 +69,13 @@ agentive-solution@DESKTOP-PNAKLV9:~$ cat ~/.claude-code-router/config.json
 }
 ```
 
-Ye tab hota hai jab ek baar ccr chalaya ho jaise `ccr status`.
+Or if the file is not exist it shows:
 
-### Is Output Se Ye Error Milta Hai
+```bash
+cat: /home/agentive-solution/.claude-code-router/config.json: No such file or directory
+```
 
-![400-Error-Missing-Model-In-Request-Body](/images/400-missing-model-error.png "The title for the image")
-
-### Solution
-
-Ubuntu terminal mein ye configuration paste karo:
+In both cases paste this configuration in the Ubuntu terminal:
 
 ```bash
 cat > ~/.claude-code-router/config.json << 'EOF'
@@ -161,19 +108,13 @@ cat > ~/.claude-code-router/config.json << 'EOF'
 EOF
 ```
 
-### Verify Karo
-
-Config.json file ke andar properties check karne ke liye:
-
-```bash
-nano ~/.claude-code-router/config.json
-```
-
 ### CCR Start Karo
 
 ```bash
 ccr start
 ```
+### CCR restart Karo
+
 
 ### Status Check Karo
 
@@ -189,9 +130,11 @@ ccr code
 
 ### Result
 
-Message `Hi` bhejne ke baad aap notice karoge ki previous error `400-Error-Missing-Model-In-Request-Body` resolve ho gaya hai. Lekin aapko ek aur error milega.
+Message `Hi` bhejne ke baad aap notice karoge ki previous error `400-Error-Missing-Model-In-Request-Body` resolve ho gaya hai. \
 
----
+> **Note**: Lekin aapko ek aur error milega `500`.
+
+----------------------------------- Solution Ended of Error No.2 -----------------------------------
 
 ## Error-3: Connection Failed (500 Error)
 
@@ -199,39 +142,46 @@ Message `Hi` bhejne ke baad aap notice karoge ki previous error `400-Error-Missi
 
 ![500-Error-Fetch-FailedTypeError](/images/500-Error-Fetch-FailedTypeError.png "The title for the image")
 
-### Pehle Kya Kiya
+<div align="center">
 
-Root directory `kiro-openai-gateway` (jahan actual kiro repository clone ki thi) mein terminal mein ye run kiya:
+## **There are two steps to solve this error**
+
+</div>
+
+## Step-1:
+
+### Open the directory `kiro-openai-gateway`
+
+Root directory `kiro-openai-gateway` (jahan actual kiro repository clone ki thi) terminal mai phir:
+
+- **Run this command to start the server:**
 
 ```bash
 python main.py
 ```
 
-Server start ho gaya. Phir claude code CLI stop kiya aur restart kiya:
+Server start hojaegha.
+
+- **Run this command to restart the claude-code-router:**
 
 ```bash
 ccr restart
 ```
 
-Phir dobara claude code start kiya:
+- **Run this command to start the claude code CLI:**
 
 ```bash
 ccr code
 ```
 
-### Phir Bhi Error
+## Step-2:
 
-![500-Error-Fetch-FailedTypeError](/images/500-Error-Fetch-FailedTypeError.png "The title for the image")
+```text
+WSL apna localhost use kar raha ha system ka nhi.
+WSL ke Localhost ko Windows IP Address se replace karo config.json file mein Ubuntu terminal se.
+```
 
-Ye error isliye aaya kyunki WSL apna localhost use kar raha tha.
-
-### Solution
-
-Localhost ko Windows IP Address se replace karo config.json file mein Ubuntu terminal se.
-
-### Steps To Resolve
-
-**Ubuntu terminal mein ye commands run karo:**
+### **Ubuntu terminal mein ye commands run karo:**
 
 #### 1. Connection Diagnose Karo
 
@@ -275,19 +225,14 @@ Enter → Confirm
 Ctrl + x → Exit
 ```
 
-#### 7. Configuration Change Karo
-
-```json
-{
-  "apiKey": "sk-dummy-key-12345",
-  "baseURL": "http://172.x.x.x:8000/v1/chat/completions"
-}
-```
-
 #### 8. CCR Restart Karo
 
 ```bash
 ccr restart
+```
+#### 9. Run claude code.
+
+```bash
 ccr code
 ```
 
@@ -298,6 +243,27 @@ ccr code
 
 📌 PROBLEM SOLVE KARNE KE STEPS
 --------------------------------------------------------------------------------
+
+
+## Why Error-1: Port Already in Use Occurs? Details Guide:
+
+Jab `ccr start` command chalaya to service start nahi hui. Error message mein sirf "Loaded JSON config" dikhaya aur phir exit code 1 ke saath fail ho gaya.
+
+`ccr status` check kiya to "Not Running" dikh raha tha, lekin `ccr start` karne pe bhi service shuru nahi ho rahi thi.
+
+### Problem Ki Wajah (Reason)
+
+Port 3456 pe ek purana process "wslrelay.exe" chal raha tha.
+
+Yeh isliye hua kyunki:
+- Pehle ccr ko WSL Ubuntu terminal se start kiya gaya tha
+- WSLRelay.exe ek helper process hai jo Windows aur WSL ke beech network traffic forward karta hai
+- Jab ccr band hua ya crash hua, wslrelay ne port 3456 release nahi kiya
+- Is wajah se naya ccr instance us port ko use nahi kar saka
+
+**Simple words mein:** Darwaza (port 3456) pehle se kisi aur ne rok rakha tha, isliye ccr andar nahi ja saka.
+
+------------------------------------------------------------------------------------------
 
 First run this `ccr start` then check:
 
@@ -324,97 +290,6 @@ Step 6: Verify karo service chal rahi hai
 📊 Quick Reference Table
 TaskWindows (CMD)Ubuntu/WSL (Bash)Port checknetstat -ano | findstr :3456sudo lsof -i :3456Process listtasklist | findstr <PID>ps aux | grep <PID>Kill processtaskkill /PID <PID> /Fkill -9 <PID>CCR startccr startccr startCCR statusccr statusccr status
 
-
-📌 FUTURE MEIN IS PROBLEM SE BACHNE KE LIYE (SUGGESTIONS)
---------------------------------------------------------------------------------
-1. EK JAGAH USE KARO:
-   - Ya sirf Windows CMD mein ccr chalao
-   - Ya sirf WSL Ubuntu mein
-   - Dono jagah mat chalao (port conflict hoga)
-
-2. PROPERLY BAND KARO:
-   - Hamesha "ccr stop" use karo band karne ke liye
-   - Terminal seedha close mat karo jab ccr chal raha ho
-
-3. WSL SE WINDOWS PE SWITCH KARTE WAQT:
-   - Pehle WSL mein: ccr stop
-   - Phir Windows mein: wsl --shutdown
-   - Ab Windows mein: ccr start
-
-4. MERI RECOMMENDATION:
-   - Windows CMD use karo - cleaner hai
-   - WSLRelay wali problems nahi aayengi
-
-
-📌 AGAR DOBARA YAHI PROBLEM AAYE TO KYA KARO?
---------------------------------------------------------------------------------
-Quick Fix Commands (Windows CMD/PowerShell mein):
-
-1. Port check karo:
-   netstat -ano | findstr :3456
-
-2. Agar koi process mil jaye to uski PID note karo aur kill karo:
-   taskkill /PID [PID_NUMBER] /F
-
-3. Ya shortcut - poora WSL restart karo:
-   wsl --shutdown
-
-4. Phir ccr start karo:
-   ccr start
-
-==============================================================================
-
-Localhost computer ka apna address hota hai, aur Windows aur WSL aksar isi localhost ko share karte hain.
-
-Localhost zyada tar same hota hai, lekin jab service ghalat jagah bind ho ya VM-style networking ho, to error aa jata hai.
-Means jab hamare configuration set na ho claude code router ki tho ye problem aata hai.
-
-WSL mein localhost = WSL ka apna network (Windows nahi!)
-
-✅ Ab Dono Jagah Kyun Chal Raha Hai?
-WSL (Ubuntu) - Ab chal raha hai kyunki:
-bash# Humne config fix kiya
-~/.claude-code-router/config.json
-# Ab ye Windows ka IP use kar raha hai: http://172.x.x.x:8000
-Ab WSL → Windows ka IP → Kiro Gateway ✅
-Windows (CMD) - Chal raha hai kyunki:
-cmdC:\Users\TechLink\.claude-code-router\config.json
-# Ye localhost use karta hai: http://localhost:8000
-Windows → localhost → Kiro Gateway (same computer) ✅
-
-(Error wala):
-
-WSL se: "Hello Kiro, kahan ho?" → localhost (WSL ka) → Koi nahi mila ❌
-Kiro Windows mein baitha tha, WSL ke localhost mein nahi tha.
-
-
-(Working):
-
-WSL se: "Hello Kiro, kahan ho?" → Windows ka IP → Kiro mil gaya ✅
-Windows se: "Hello Kiro, kahan ho?" → localhost (Windows ka) → Kiro mil gaya ✅
-
-
-Another same Error in Ubuntu:
-
-Problem Summary & Resolution Guide
-🔴 What Was The Problem?
-Error: fetch failed - Claude Code Router (CCR) couldn't connect to the Kiro Gateway server.
-Root Cause: Network connectivity issue between WSL (Windows Subsystem for Linux) and Windows. CCR was trying to connect to localhost:8000, but when running from WSL, localhost refers to the WSL network interface, NOT the Windows host where Kiro Gateway was running.
-
-🤔 Why Did This Problem Occur?
-
-WSL Network Isolation: WSL2 runs in a virtualized environment with its own network stack. localhost in WSL ≠ localhost in Windows.
-Configuration Issue: CCR's config file (~/.claude-code-router/config.json) was either:
-
-Not configured at all, OR
-Pointing to http://localhost:8000 instead of the Windows host IP
-
-
-Why It Worked Yesterday:
-
-Network configuration might have changed (Windows IP can change on restart)
-CCR config might have been accidentally reset
-WSL might have been restarted, changing network routing
 
 
 ### Maintained by Shahzain Ali | [LinkedIn Profile](https://www.linkedin.com/in/shahzain-ali-518b862ba/)
