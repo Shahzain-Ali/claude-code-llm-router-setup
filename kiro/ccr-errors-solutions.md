@@ -236,6 +236,8 @@ ccr restart
 ccr code
 ```
 
+✅ Successfully Claude-Code_Router is  running with kiro.
+
 ---
 
 **End of Guide**
